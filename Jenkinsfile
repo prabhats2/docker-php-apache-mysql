@@ -1,15 +1,12 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:compose'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
+  agent {
+    dockerfile true
+  }
+  stages {
+    stage ('Run Docker Compose') {
+      steps{
+        sh 'docker-compose up -d'
+      }
     }
-    stages {
-        stage('Deploy') {
-            steps {
-                sh 'docker-compose up -d'
-            }
-        }
-    }
+  }
 }
